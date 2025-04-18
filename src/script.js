@@ -238,39 +238,40 @@ function toggleFullScreen() {
 
 
 
-    const doc = document.documentElement;
+   
 
-    // Check if we're already in fullscreen
-    if (!document.fullscreenElement &&
-        !document.webkitFullscreenElement &&
-        !document.mozFullScreenElement &&
-        !document.msFullscreenElement) {
-
-        // Request fullscreen on the document element or body (to cover more cases)
-        if (doc.requestFullscreen) {
-            doc.requestFullscreen();
-        } else if (doc.webkitRequestFullscreen) {
-            doc.webkitRequestFullscreen(); // Safari
-        } else if (doc.mozRequestFullScreen) {
-            doc.mozRequestFullScreen(); // Firefox
-        } else if (doc.msRequestFullscreen) {
-            doc.msRequestFullscreen(); // IE/Edge
-        }
-    } else {
-        // Exit fullscreen if already in fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen(); // Safari
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen(); // Firefox
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen(); // IE/Edge
-        }
+    function toggleFullScreen() {
+        const doc = document.documentElement;  // Get the root element (HTML)
     
+        if (!document.fullscreenElement && 
+            !document.webkitFullscreenElement && 
+            !document.mozFullScreenElement && 
+            !document.msFullscreenElement) {
+            
+            // Request fullscreen on the document element
+            if (doc.requestFullscreen) {
+                doc.requestFullscreen();
+            } else if (doc.webkitRequestFullscreen) {
+                doc.webkitRequestFullscreen();  // Safari
+            } else if (doc.mozRequestFullScreen) {
+                doc.mozRequestFullScreen();  // Firefox
+            } else if (doc.msRequestFullscreen) {
+                doc.msRequestFullscreen();  // IE/Edge
+            }
+        } else {
+            // Exit fullscreen if already in fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();  // Safari
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();  // Firefox
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();  // IE/Edge
+            }
+        }
     }
-
-
+    
 
 }
 
