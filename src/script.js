@@ -231,39 +231,7 @@ function toggleFullScreen() {
             document.mozCancelFullScreen(); // Firefox
         }
     }
-    
 
-
-
-
-
-
-   
-    const doc = document.documentElement;
-
-    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement) {
-        // Request fullscreen on the document element or body (to cover more cases)
-        if (doc.requestFullscreen) {
-            doc.requestFullscreen();
-        } else if (doc.webkitRequestFullscreen) {
-            doc.webkitRequestFullscreen(); // Safari
-        } else if (doc.mozRequestFullScreen) {
-            doc.mozRequestFullScreen(); // Firefox
-        } else if (doc.msRequestFullscreen) {
-            doc.msRequestFullscreen(); // IE/Edge
-        }
-    } else {
-        // Exit fullscreen if already in fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen(); // Safari
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen(); // Firefox
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen(); // IE/Edge
-        }
-    }
     
 
 }
@@ -276,17 +244,3 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-
-
-
-
-// Show fullscreen button only on touch devices (mobile/tablet)
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    document.getElementById('fullscreen-btn').style.display = 'block';
-}
-
-
-// Event listener for mobile tap (works on iPhone and Android)
-document.getElementById('fullscreen-btn').addEventListener('click', function () {
-    toggleFullScreen();
-});

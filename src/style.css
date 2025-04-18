@@ -8,7 +8,7 @@ html,
 body
 {
     overflow: hidden;
-    touch-action: manipulation;  /* Prevents blocking touch actions */
+  
 }
 
 .webgl
@@ -20,22 +20,3 @@ body
 }
 
 
-#fullscreen-btn {
-    display: none; /* Hidden initially */
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1.5rem;
-    padding: 10px 15px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
-}
-
-#fullscreen-btn:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-}
