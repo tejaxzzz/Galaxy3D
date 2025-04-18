@@ -231,27 +231,50 @@ function toggleFullScreen() {
             document.mozCancelFullScreen(); // Firefox
         }
     }
+    
+
+
+
+
+
+
+    const doc = document.documentElement;
+
     if (!document.fullscreenElement &&
         !document.webkitFullscreenElement &&
-        !document.mozFullScreenElement) {
-        
-        const docEl = document.documentElement;
-        if (docEl.requestFullscreen) {
-            docEl.requestFullscreen();
-        } else if (docEl.webkitRequestFullscreen) {
-            docEl.webkitRequestFullscreen();
-        } else if (docEl.mozRequestFullScreen) {
-            docEl.mozRequestFullScreen();
+        !document.mozFullScreenElement &&
+        !document.msFullscreenElement) {
+
+        if (doc.requestFullscreen) {
+            doc.requestFullscreen();
+        } else if (doc.webkitRequestFullscreen) {
+            doc.webkitRequestFullscreen(); // Safari
+        } else if (doc.mozRequestFullScreen) {
+            doc.mozRequestFullScreen(); // Firefox
+        } else if (doc.msRequestFullscreen) {
+            doc.msRequestFullscreen(); // IE/Edge
         }
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
+            document.webkitExitFullscreen(); // Safari
         } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
+            document.mozCancelFullScreen(); // Firefox
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen(); // IE/Edge
         }
     }
+
+
+
+
+
+
+
+
+
+
 }
 
 // Event listener for pressing the "F" key
@@ -261,19 +284,30 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Event listener for double-tapping on mobile/touch devices
-let lastTapMobile = 0;
-const fullscreenBtn = document.getElementById('mobileFullscreen');
 
-fullscreenBtn.addEventListener('touchend', function (e) {
+
+
+
+
+
+//// Show fullscreen button only on touch devices (mobile/tablet)
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.getElementById('fullscreen-btn').style.display = 'block';
+}
+
+// Event listener for the fullscreen button
+document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+
+// Double-tap to enter fullscreen on mobile devices (optional)
+let lastTap = 0;
+document.addEventListener('touchstart', function (e) {
     const currentTime = new Date().getTime();
-    const tapGap = currentTime - lastTapMobile;
-
-    if (tapGap < 500 && tapGap > 0) {
-       
+    const tapLength = currentTime - lastTap;
+    
+    if (tapLength < 500 && tapLength > 0) {
         toggleFullScreen();
         e.preventDefault();
     }
 
-    lastTapMobile = currentTime;
+    lastTap = currentTime;
 });
