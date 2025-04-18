@@ -8,7 +8,16 @@ import galaxyFragmentShader from './shaders/galaxy/fragment.glsl'
  * Base
  */
 // Debug
-const gui = new GUI()
+const gui = new GUI({ title: 'Tweaksss✨🌌' })
+gui.close();
+
+// Position the GUI in the top-right corner
+gui.domElement.style.position = 'fixed';
+gui.domElement.style.top = '3px'; // Adjust the top position if necessary
+gui.domElement.style.right = '3px'; // Adjust the right position if necessary
+gui.domElement.style.zIndex = '1000'; // Ensure the GUI is on top of other elements
+
+gui.domElement.style.width = '150px';
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -199,3 +208,45 @@ const tick = () =>
 }
 
 tick()
+
+
+//////////////////////////////////////////////////////////////////////// Function to enter or exit fullscreen
+function toggleFullScreen() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement) {
+        // Request fullscreen
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(); // Safari
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen(); // Firefox
+        }
+    } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen(); // Safari
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen(); // Firefox
+        }
+    }
+}
+
+// Event listener for pressing the "F" key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+    }
+});
+
+// Event listener for double-tapping on mobile/touch devices
+let lastTap = 0;
+document.addEventListener('touchend', function (e) {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    if (tapLength < 500 && tapLength > 0) {
+        toggleFullScreen();
+    }
+    lastTap = currentTime;
+});
