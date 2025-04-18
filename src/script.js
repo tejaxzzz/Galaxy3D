@@ -17,7 +17,7 @@ gui.domElement.style.top = '3px'; // Adjust the top position if necessary
 gui.domElement.style.right = '3px'; // Adjust the right position if necessary
 gui.domElement.style.zIndex = '1000'; // Ensure the GUI is on top of other elements
 
-gui.domElement.style.width = '150px';
+gui.domElement.style.width = '200px';
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -242,11 +242,12 @@ document.addEventListener('keydown', (e) => {
 
 // Event listener for double-tapping on mobile/touch devices
 let lastTap = 0;
-document.addEventListener('touchend', function (e) {
+document.addEventListener('touchstart', function (e) {
     const currentTime = new Date().getTime();
     const tapLength = currentTime - lastTap;
-    if (tapLength < 500 && tapLength > 0) {
-        toggleFullScreen();
+    if (tapLength < 500 && tapLength > 0) { // Double tap detection
+        toggleFullScreen();  // Trigger fullscreen toggle
+        e.preventDefault();   // Prevent default action like zooming
     }
     lastTap = currentTime;
 });
