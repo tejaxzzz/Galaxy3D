@@ -231,6 +231,27 @@ function toggleFullScreen() {
             document.mozCancelFullScreen(); // Firefox
         }
     }
+    if (!document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.mozFullScreenElement) {
+        
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) {
+            docEl.requestFullscreen();
+        } else if (docEl.webkitRequestFullscreen) {
+            docEl.webkitRequestFullscreen();
+        } else if (docEl.mozRequestFullScreen) {
+            docEl.mozRequestFullScreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+    }
 }
 
 // Event listener for pressing the "F" key
@@ -241,12 +262,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Event listener for double-tapping on mobile/touch devices
-// 🔍 Show the fullscreen button only on touch devices
-if ('ontouchstart' in window || navigator.maxTouchPoints) {
-    document.getElementById('mobileFullscreen').style.display = 'flex';
-}
-
-// 🤏 Double-tap detection on the fullscreen button
 let lastTapMobile = 0;
 const fullscreenBtn = document.getElementById('mobileFullscreen');
 
@@ -255,7 +270,8 @@ fullscreenBtn.addEventListener('touchend', function (e) {
     const tapGap = currentTime - lastTapMobile;
 
     if (tapGap < 500 && tapGap > 0) {
-        toggleFullScreen(); // Your existing fullscreen toggle function
+       
+        toggleFullScreen();
         e.preventDefault();
     }
 
