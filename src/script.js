@@ -241,13 +241,23 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Event listener for double-tapping on mobile/touch devices
-let lastTap = 0;
-document.addEventListener('touchstart', function (e) {
+// 🔍 Show the fullscreen button only on touch devices
+if ('ontouchstart' in window || navigator.maxTouchPoints) {
+    document.getElementById('mobileFullscreen').style.display = 'flex';
+}
+
+// 🤏 Double-tap detection on the fullscreen button
+let lastTapMobile = 0;
+const fullscreenBtn = document.getElementById('mobileFullscreen');
+
+fullscreenBtn.addEventListener('touchend', function (e) {
     const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-    if (tapLength < 500 && tapLength > 0) { // Double tap detection
-        toggleFullScreen();  // Trigger fullscreen toggle
-        e.preventDefault();   // Prevent default action like zooming
+    const tapGap = currentTime - lastTapMobile;
+
+    if (tapGap < 500 && tapGap > 0) {
+        toggleFullScreen(); // Your existing fullscreen toggle function
+        e.preventDefault();
     }
-    lastTap = currentTime;
+
+    lastTapMobile = currentTime;
 });
