@@ -240,11 +240,13 @@ function toggleFullScreen() {
 
     const doc = document.documentElement;
 
+    // Check if we're already in fullscreen
     if (!document.fullscreenElement &&
         !document.webkitFullscreenElement &&
         !document.mozFullScreenElement &&
         !document.msFullscreenElement) {
 
+        // Request fullscreen on the document element or body (to cover more cases)
         if (doc.requestFullscreen) {
             doc.requestFullscreen();
         } else if (doc.webkitRequestFullscreen) {
@@ -255,6 +257,7 @@ function toggleFullScreen() {
             doc.msRequestFullscreen(); // IE/Edge
         }
     } else {
+        // Exit fullscreen if already in fullscreen
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.webkitExitFullscreen) {
@@ -264,14 +267,8 @@ function toggleFullScreen() {
         } else if (document.msExitFullscreen) {
             document.msExitFullscreen(); // IE/Edge
         }
+    
     }
-
-
-
-
-
-
-
 
 
 
@@ -289,21 +286,22 @@ document.addEventListener('keydown', (e) => {
 
 
 
-
-//// Show fullscreen button only on touch devices (mobile/tablet)
+// Show fullscreen button only on touch devices (mobile/tablet)
 if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     document.getElementById('fullscreen-btn').style.display = 'block';
 }
 
 // Event listener for the fullscreen button
-document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+document.getElementById('fullscreen-btn').addEventListener('click', function () {
+    toggleFullScreen();
+});
 
-// Double-tap to enter fullscreen on mobile devices (optional)
+// Double-tap to enter fullscreen on mobile devices
 let lastTap = 0;
 document.addEventListener('touchstart', function (e) {
     const currentTime = new Date().getTime();
     const tapLength = currentTime - lastTap;
-    
+
     if (tapLength < 500 && tapLength > 0) {
         toggleFullScreen();
         e.preventDefault();
